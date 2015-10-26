@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Just Java</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_add">add</string>
+    <string name="title_activity_add2">add2</string>
+    <string name="title_activity_add3">add3</string>
+    <string name="title_activity_check_status">checkStatus</string>
+</resources>
