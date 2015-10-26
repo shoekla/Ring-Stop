@@ -1,4 +1,4 @@
-package com.example.abirshukla.justjava;
+package com.example.abirshukla.RingStop;
 
 
 import java.util.ArrayList;
@@ -11,9 +11,9 @@ public class listTime {
     }
     public static ArrayList<String> names = new ArrayList<String>();
     public static ArrayList<timeSlot> timeSlots = new ArrayList<timeSlot>();
-    public static void addToList(String name, int beginTime, int endTime) {
+    public static void addToList(String name, String mode, String endTimeS, int beginTime, int endTime) {
         names.add(name);
-        timeSlot t = new timeSlot(name, beginTime, endTime);
+        timeSlot t = new timeSlot(name, mode, endTimeS, beginTime, endTime);
         timeSlots.add(t);
     }
     public static ArrayList<String> getArrNames() {
@@ -27,11 +27,12 @@ public class listTime {
         return -1;
     }
     public static String getEnd (int i) {
-        int end = timeSlots.get(i).getEndTime();
-        int hour = (end / 100);
-        int minute = end = (hour * 100);
-        String res = ""+hour +": " + minute+".";
-        return res;
+        String end = timeSlots.get(i).getEndTimeS();
+        return end;
+    }
+    public static boolean vibrate (int i) {
+        String mode = timeSlots.get(i).getMode();
+        return mode.equals("Vibrate");
     }
 
 }

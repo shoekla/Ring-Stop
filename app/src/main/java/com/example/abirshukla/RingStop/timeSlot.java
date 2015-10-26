@@ -1,16 +1,18 @@
-package com.example.abirshukla.justjava;
+package com.example.abirshukla.RingStop;
 
 /**
  * Created by abirshukla on 10/25/15.
  */
 public class timeSlot {
-    String name;
+    String name, mode, endTimeS;
     int beginTime, endTime;
     //int[] days;
-    public timeSlot(String name, int beginTime, int endTime){
+    public timeSlot(String name, String mode, String endTimeS, int beginTime, int endTime){
         this.beginTime = beginTime;
         this.endTime = endTime;
         this.name = name;
+        this.mode = mode;
+        this.endTimeS = endTimeS;
 
     }
     public String getName() {
@@ -21,5 +23,11 @@ public class timeSlot {
     }
     public int getEndTime () {
         return this.endTime;
+    }
+    public String getMode () {
+        return this.mode;
+    }
+    public String getEndTimeS () {
+        return this.endTimeS;
     }
 }

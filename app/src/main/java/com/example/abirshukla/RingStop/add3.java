@@ -1,27 +1,23 @@
-package com.example.abirshukla.justjava;
+package com.example.abirshukla.RingStop;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.widget.ListView;
-import java.util.ArrayList;
-import java.util.Calendar;
 
-import android.widget.ArrayAdapter;
-import android.graphics.Canvas;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
-import android.content.Intent;
 import android.widget.TimePicker;
+
+import java.util.ArrayList;
 
 public class add3 extends ActionBarActivity {
     String name, title;
     int beginTime, beginHour;
-
+    String backUpName,mode;
+    ArrayList<String> days;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +29,9 @@ public class add3 extends ActionBarActivity {
         beginTime = nameAndTime.getInt("BeginTime");
         name = nameAndTime.getString("className");
         beginHour = nameAndTime.getInt("hourB");
+        backUpName = name;
+        mode = nameAndTime.getString("mode");
+        days = nameAndTime.getStringArrayList("days");
     }
 
     @Override
@@ -61,6 +60,7 @@ public class add3 extends ActionBarActivity {
         TimePicker t = (TimePicker) findViewById(R.id.timePicker2);
         int hour = t.getCurrentHour();
         int minute = t.getCurrentMinute();
+        String endTimeS;
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Time Is not after the begining Time");
 
@@ -71,29 +71,59 @@ public class add3 extends ActionBarActivity {
         }
         */
 
-        if (beginHour < hour) {
             if ((hour) > 12) {
                 int hourA = hour - 12;
                 if (minute < 10) {
-                    name = name + " " + hourA + ": 0"+ minute + " PM)";
+                    name = name + " " + hourA + ": 0"+ minute + " PM) ("+mode+")";
+                    endTimeS = hourA+": 0"+minute+" PM.";
                 }
                 else {
-                    name = name + " " + hourA + ": "+ minute + " PM)";
+                    name = name + " " + hourA + ": "+ minute + " PM) ("+mode+")";
+                    endTimeS = hourA+": "+minute+" PM.";
                 }
+
             }
             else {
                 if (minute < 10) {
-                    name = name + " " + hour + ": 0"+ minute + " AM)";
+                    name = name + " " + hour + ": 0"+ minute + " AM) ("+mode+")";
+                    endTimeS = hour+": 0"+minute+" AM.";
                 }
                 else {
-                    name = name + " " + hour + ": "+ minute + " AM)";
+                    name = name + " " + hour + ": "+ minute + " AM) ("+mode+")";
+                    endTimeS = hour+": "+minute+" AM.";
                 }
             }
-        }
+        String finalName = "";
+        String listOfDays = "";
         int endTime = (hour * 100) + minute;
+        if (endTime <= beginTime){
+            name = backUpName;
+            alertDialogBuilder.show();
+            return;
+        }
+        if (days.size() == 0) {
+            finalName = name + " (NO DAYS)";
+        }
+        else {
+            for (int i = 0; i < days.size(); i++) {
+                if (i == 0) {
+                    listOfDays = " ("+days.get(i);
+                }
+                else if (i != days.size()-1){
+                    listOfDays = listOfDays +","+days.get(i);
+                }
+                else {
+                    listOfDays = listOfDays +","+days.get(i)+")";
+                }
+            }
+            finalName = name + listOfDays;
+        }
+        g.putExtra("endTimeStr", endTimeS);
+        g.putExtra("mode",mode);
         g.putExtra("beginTime", beginTime);
         g.putExtra("endTime", endTime);
-        g.putExtra("name", name);
+        g.putExtra("name", finalName);
+        g.putExtra("days", days);
         startActivity(g);
     }
 }

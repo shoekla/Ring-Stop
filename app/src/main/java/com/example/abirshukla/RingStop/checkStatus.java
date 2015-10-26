@@ -1,4 +1,4 @@
-package com.example.abirshukla.justjava;
+package com.example.abirshukla.RingStop;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;

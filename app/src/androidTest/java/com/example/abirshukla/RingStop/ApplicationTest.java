@@ -1,4 +1,4 @@
-package com.example.abirshukla.justjava;
+package com.example.abirshukla.RingStop;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

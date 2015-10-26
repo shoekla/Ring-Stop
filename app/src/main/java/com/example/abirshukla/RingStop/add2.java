@@ -1,31 +1,31 @@
-package com.example.abirshukla.justjava;
+package com.example.abirshukla.RingStop;
 
 import android.content.Intent;
-import android.widget.ListView;
-import java.util.ArrayList;
-import java.util.Calendar;
 
-import android.widget.ArrayAdapter;
-import android.graphics.Canvas;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
-import android.content.Intent;
 import android.widget.TimePicker;
+
+import java.util.ArrayList;
 
 
 public class add2 extends ActionBarActivity {
     String name;
+    String resName;
+    String mode;
+    ArrayList<String> days;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add2);
         Bundle nameU = getIntent().getExtras();
         name = nameU.getString("className");
+        mode = nameU.getString("mode");
+        days = nameU.getStringArrayList("days");
         TextView t = (TextView) findViewById(R.id.textViewNameB);
         t.setText("Enter Start Time For "+name+".");
     }
@@ -61,25 +61,27 @@ public class add2 extends ActionBarActivity {
         String title = name;
         f.putExtra("hourB", hour);
         f.putExtra("title",title);
-            if ((hour) > 12) {
+            if (hour > 12) {
                 int hourA = hour - 12;
                 if (minute < 10) {
-                    name = name + " (" + hourA + ": 0"+ minute + " PM - ";
+                    resName = name + " (" + hourA + ": 0"+ minute + " PM - ";
                 }
                 else {
-                    name = name + " (" + hourA + ": "+ minute + " PM - ";
+                    resName  = name + " (" + hourA + ": "+ minute + " PM - ";
                 }
             } else {
                 if (minute < 10) {
-                    name = name + " (" + hour + ": 0"+ minute + " AM - ";
+                    resName  = name + " (" + hour + ": 0"+ minute + " AM - ";
                 }
                 else {
-                    name = name + " (" + hour + ": "+ minute + " AM - ";
+                    resName  = name + " (" + hour + ": "+ minute + " AM - ";
                 }
             }
         time = (hour * 100) + minute;
-        f.putExtra("className", name);
+        f.putExtra("className", resName);
+        f.putExtra("mode",mode);
         f.putExtra("BeginTime",time);
+        f.putExtra("days",days);
         startActivity(f);
 
     }

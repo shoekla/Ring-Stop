@@ -1,19 +1,16 @@
-package com.example.abirshukla.justjava;
+package com.example.abirshukla.RingStop;
 
 import android.content.Intent;
-import android.widget.ListView;
-import java.util.ArrayList;
-import android.widget.ArrayAdapter;
-import android.graphics.Canvas;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.content.Intent;
+import android.widget.CheckBox;
+import android.widget.Spinner;
 import android.widget.EditText;
+
+import java.util.ArrayList;
 
 public class add extends ActionBarActivity {
     @Override
@@ -59,6 +56,9 @@ public class add extends ActionBarActivity {
     }
     public void submitString (View view) {
         Intent m = new Intent(this, add2.class);
+        Spinner n = (Spinner) findViewById(R.id.phoneMode);
+        String mode = String.valueOf(n.getSelectedItem());
+        m.putExtra("mode", mode);
         final EditText input = (EditText) findViewById(R.id.name);
         String str = input.getText().toString();
         if (str == null) {
@@ -70,6 +70,36 @@ public class add extends ActionBarActivity {
             return;
         }
         m.putExtra("className", str);
+        CheckBox mon = (CheckBox) findViewById(R.id.monCheck);
+        CheckBox tues = (CheckBox) findViewById(R.id.tuesCheck);
+        CheckBox wen = (CheckBox) findViewById(R.id.wenCheck);
+        CheckBox thur = (CheckBox) findViewById(R.id.thurCheck);
+        CheckBox fri = (CheckBox) findViewById(R.id.friCheck);
+        CheckBox sat = (CheckBox) findViewById(R.id.satCheck);
+        CheckBox sun = (CheckBox) findViewById(R.id.sunCheck);
+        ArrayList<String> dayList = new ArrayList<String>();
+        if (mon.isChecked()) {
+            dayList.add("M");
+        }
+        if (tues.isChecked()) {
+            dayList.add("T");
+        }
+        if (wen.isChecked()) {
+            dayList.add("W");
+        }
+        if (thur.isChecked()) {
+            dayList.add("TH");
+        }
+        if (fri.isChecked()) {
+            dayList.add("F");
+        }
+        if (sat.isChecked()) {
+            dayList.add("SA");
+        }
+        if (sun.isChecked()) {
+            dayList.add("SU");
+        }
+        m.putExtra("days",dayList);
 
         startActivity(m);
     }

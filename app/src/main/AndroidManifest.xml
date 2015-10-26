@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.abirshukla.justjava" >
+    package="com.example.abirshukla.RingStop" >
 
     <application
         android:allowBackup="true"
@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.abirshukla.RingStop.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,19 +17,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".add"
+            android:name="com.example.abirshukla.RingStop.add"
             android:label="@string/title_activity_add" >
         </activity>
         <activity
-            android:name=".add2"
+            android:name="com.example.abirshukla.RingStop.add2"
             android:label="@string/title_activity_add2" >
         </activity>
         <activity
-            android:name=".add3"
+            android:name="com.example.abirshukla.RingStop.add3"
             android:label="@string/title_activity_add3" >
         </activity>
         <activity
-            android:name=".checkStatus"
+            android:name="com.example.abirshukla.RingStop.checkStatus"
             android:label="@string/title_activity_check_status" >
         </activity>
     </application>
