@@ -77,27 +77,27 @@ public class add extends ActionBarActivity {
         CheckBox fri = (CheckBox) findViewById(R.id.friCheck);
         CheckBox sat = (CheckBox) findViewById(R.id.satCheck);
         CheckBox sun = (CheckBox) findViewById(R.id.sunCheck);
-        ArrayList<String> dayList = new ArrayList<String>();
+        String dayList = "";
         if (mon.isChecked()) {
-            dayList.add("M");
+            dayList= dayList+"M";
         }
         if (tues.isChecked()) {
-            dayList.add("T");
+            dayList= dayList+"T";
         }
         if (wen.isChecked()) {
-            dayList.add("W");
+            dayList= dayList+"W";
         }
         if (thur.isChecked()) {
-            dayList.add("TH");
+            dayList= dayList+"TH";
         }
         if (fri.isChecked()) {
-            dayList.add("F");
+            dayList= dayList+"F";
         }
         if (sat.isChecked()) {
-            dayList.add("SA");
+            dayList= dayList+"SA";
         }
         if (sun.isChecked()) {
-            dayList.add("SU");
+            dayList= dayList+"SU";
         }
         m.putExtra("days",dayList);
 

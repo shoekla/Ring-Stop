@@ -11,13 +11,15 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class add2 extends ActionBarActivity {
     String name;
     String resName;
     String mode;
-    ArrayList<String> days;
+    String days;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,9 +27,10 @@ public class add2 extends ActionBarActivity {
         Bundle nameU = getIntent().getExtras();
         name = nameU.getString("className");
         mode = nameU.getString("mode");
-        days = nameU.getStringArrayList("days");
+        days = nameU.getString("days");
         TextView t = (TextView) findViewById(R.id.textViewNameB);
-        t.setText("Enter Start Time For "+name+".");
+        t.setText("Enter Start Time For " + name + ".");
+
     }
 
     @Override
@@ -85,4 +88,5 @@ public class add2 extends ActionBarActivity {
         startActivity(f);
 
     }
+
 }

@@ -17,7 +17,7 @@ public class add3 extends ActionBarActivity {
     String name, title;
     int beginTime, beginHour;
     String backUpName,mode;
-    ArrayList<String> days;
+    String days;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +31,7 @@ public class add3 extends ActionBarActivity {
         beginHour = nameAndTime.getInt("hourB");
         backUpName = name;
         mode = nameAndTime.getString("mode");
-        days = nameAndTime.getStringArrayList("days");
+        days = nameAndTime.getString("days");
     }
 
     @Override
@@ -101,19 +101,22 @@ public class add3 extends ActionBarActivity {
             alertDialogBuilder.show();
             return;
         }
-        if (days.size() == 0) {
+        if (days.length() == 0) {
             finalName = name + " (NO DAYS)";
         }
+        else if (days.length() == 1) {
+            finalName = name + " ("+days.charAt(0)+")";
+        }
         else {
-            for (int i = 0; i < days.size(); i++) {
+            for (int i = 0; i < days.length(); i++) {
                 if (i == 0) {
-                    listOfDays = " ("+days.get(i);
+                    listOfDays = " ("+days.charAt(i);
                 }
-                else if (i != days.size()-1){
-                    listOfDays = listOfDays +","+days.get(i);
+                else if (i != days.length()-1){
+                    listOfDays = listOfDays +","+days.charAt(i);
                 }
                 else {
-                    listOfDays = listOfDays +","+days.get(i)+")";
+                    listOfDays = listOfDays +","+days.charAt(i)+")";
                 }
             }
             finalName = name + listOfDays;

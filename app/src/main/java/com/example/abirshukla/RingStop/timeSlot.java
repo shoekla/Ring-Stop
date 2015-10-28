@@ -1,19 +1,21 @@
 package com.example.abirshukla.RingStop;
 
+import java.util.ArrayList;
+
 /**
  * Created by abirshukla on 10/25/15.
  */
 public class timeSlot {
     String name, mode, endTimeS;
     int beginTime, endTime;
-    //int[] days;
-    public timeSlot(String name, String mode, String endTimeS, int beginTime, int endTime){
+    String days;
+    public timeSlot(String name, String mode, String endTimeS, int beginTime, int endTime, String days){
         this.beginTime = beginTime;
         this.endTime = endTime;
         this.name = name;
         this.mode = mode;
         this.endTimeS = endTimeS;
-
+        this.days = days;
     }
     public String getName() {
         return this.name;
@@ -29,5 +31,8 @@ public class timeSlot {
     }
     public String getEndTimeS () {
         return this.endTimeS;
+    }
+    public String getDays () {
+        return this.days;
     }
 }
