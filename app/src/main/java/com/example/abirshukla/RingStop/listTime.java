@@ -10,7 +10,14 @@ public class listTime {
 
     }
     public static ArrayList<String> names = new ArrayList<String>();
+    public static int first = 0;
     public static ArrayList<timeSlot> timeSlots = new ArrayList<timeSlot>();
+    public static void addFirst () {
+        first++;
+    }
+    public static int getFirst () {
+        return first;
+    }
     public static ArrayList<Integer> getBeginTimes () {
         ArrayList<Integer> res = new ArrayList<Integer>();
         for (int i = 0; i < timeSlots.size(); i++) {
@@ -53,6 +60,7 @@ public class listTime {
         timeSlot t = new timeSlot(name, mode, endTimeS, beginTime, endTime, days);
         timeSlots.add(t);
     }
+
     public static ArrayList<String> getArrNames() {
         return names;
     }

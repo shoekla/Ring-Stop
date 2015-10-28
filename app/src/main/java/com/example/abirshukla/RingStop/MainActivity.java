@@ -27,6 +27,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //super.onCreate(savedInstanceState);
+        int first = listTime.getFirst();
         final ArrayList<String> list = new ArrayList<String>();
         ArrayList<String> fetchedList = listTime.getArrNames();
         for (int i = 0; i < fetchedList.size();i++) {
@@ -43,12 +44,10 @@ public class MainActivity extends ActionBarActivity {
         alertDialogBuilder.setMessage("Nothing To Update");
         final AlertDialog.Builder already = new AlertDialog.Builder(this);
         already.setMessage("Class Already Exists");
-        Button updateButton = (Button) findViewById(R.id.updateB);
-
-        updateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+            if (first == 0) {
+                listTime.addFirst();
+            }
+            else {
                 Bundle addedData = getIntent().getExtras();
                 if (addedData == null) {
                     alertDialogBuilder.show();
@@ -68,7 +67,6 @@ public class MainActivity extends ActionBarActivity {
                     }
                 }
             }
-        });
         /*
         listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView parent, View view, int position, long id) {
