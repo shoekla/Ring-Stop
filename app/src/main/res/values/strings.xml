@@ -15,6 +15,7 @@
             <item>Vibrate</item>
             <item>Silent</item>
         </string-array>
+    <string name="title_activity_voice_res">voiceRes</string>
 
 
 </resources>

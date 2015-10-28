@@ -1,9 +1,11 @@
 package com.example.abirshukla.RingStop;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -12,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,9 +24,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
+    private final int REQ_CODE_SPEECH_INPUT = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //super.onCreate(savedInstanceState);
@@ -43,6 +49,13 @@ public class MainActivity extends ActionBarActivity {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Nothing To Update");
         final AlertDialog.Builder already = new AlertDialog.Builder(this);
+        Button voiceB = (Button) findViewById(R.id.voiceButton);
+        voiceB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                promptSpeechInput();
+            }
+        });
         already.setMessage("Class Already Exists");
             if (first == 0) {
                 listTime.addFirst();
@@ -83,6 +96,46 @@ public class MainActivity extends ActionBarActivity {
             }
         }, 0, 60000);
     }
+    private void promptSpeechInput() {
+        String speech_prompt = "What do you want";
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+                speech_prompt);
+        try {
+            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException a) {
+            Toast.makeText(getApplicationContext(),"Speech Not Supported",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+    /**
+     * Receiving speech input
+     * */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Intent v = new Intent(this, voiceRes.class);
+        String res = "";
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQ_CODE_SPEECH_INPUT: {
+                if (resultCode == RESULT_OK && null != data) {
+
+                    ArrayList<String> result = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    res = result.get(0);
+                }
+                break;
+            }
+
+        }
+        v.putExtra("speech", res);
+        startActivity(v);
+    }
+
     /*
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
@@ -109,6 +162,19 @@ public class MainActivity extends ActionBarActivity {
         super.onResume();
         checkStat();
     }
+
+    @Override
+    protected void onPause() {
+        Timer mTimer = new Timer();
+        mTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                checkStat();
+            }
+        }, 0, 60000);
+        super.onPause();
+    }
+
 
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
