@@ -36,7 +36,7 @@
                   android:layout_below="@+id/button"
                   android:layout_alignParentTop="true"
                   android:layout_centerHorizontal="true"
-                  android:layout_marginTop="50dp" />
+                  android:layout_marginTop="100dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -47,6 +47,16 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/button"
         android:layout_toEndOf="@+id/button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:id="@+id/loc"
+        android:layout_below="@+id/voiceButton"
+        android:layout_alignRight="@+id/voiceButton"
+        android:layout_alignEnd="@+id/voiceButton"
+        android:onClick=""/>
     <!--
                <Button
                    android:layout_width="wrap_content"

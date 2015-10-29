@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.media.AudioManager;
 import android.speech.RecognizerIntent;
 import android.util.Log;
@@ -29,7 +32,7 @@ import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
     private final int REQ_CODE_SPEECH_INPUT = 100;
-
+    String locationStr = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //super.onCreate(savedInstanceState);
@@ -108,6 +111,7 @@ public class MainActivity extends ActionBarActivity {
         } catch (ActivityNotFoundException a) {
             Toast.makeText(getApplicationContext(),"Speech Not Supported",
                     Toast.LENGTH_SHORT).show();
+            return;
         }
     }
     /**
@@ -183,7 +187,7 @@ public class MainActivity extends ActionBarActivity {
         savedInstanceState.putStringArrayList("modes",listTime.getModes());
         savedInstanceState.putStringArrayList("endTimeMess", listTime.getEntTimeSes());
         savedInstanceState.putIntegerArrayList("beginTimes", listTime.getBeginTimes());
-        savedInstanceState.putIntegerArrayList("endTimes",listTime.getEndTimes());
+        savedInstanceState.putIntegerArrayList("endTimes", listTime.getEndTimes());
         super.onSaveInstanceState(savedInstanceState);
 
     }
@@ -200,9 +204,22 @@ public class MainActivity extends ActionBarActivity {
             listTime.addToList(names.get(i),modes.get(i),endMes.get(i),beginTimes.get(i),endTimes.get(i),days.get(i));
         }
     }
+
     public void moveToAdd (View view) {
         Intent m = new Intent(this, add.class);
         startActivity(m);
+    }
+    public void movetoLoc (View view) {
+        Intent l = new Intent(this, loc.class);
+        LocationManager manager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        if (mLastLocation != null) {
+            mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
+            mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
+        }
+        l.putExtra("loc",locationStr);
+        startActivity(l);
     }
     public void checkStat () {
         Calendar c = Calendar.getInstance();

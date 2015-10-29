@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.abirshukla.RingStop" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -35,6 +38,10 @@
         <activity
             android:name=".voiceRes"
             android:label="@string/title_activity_voice_res" >
+        </activity>
+        <activity
+            android:name=".loc"
+            android:label="@string/title_activity_loc" >
         </activity>
     </application>
 
