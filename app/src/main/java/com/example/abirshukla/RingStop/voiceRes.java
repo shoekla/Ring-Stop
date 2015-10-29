@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.abirshukla.RingStop.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Locale;
 
 public class voiceRes extends ActionBarActivity {
@@ -27,18 +28,19 @@ public class voiceRes extends ActionBarActivity {
     int endTime = 0;
     String days = "";
     String beginMess = "";
+    String dayMess = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_voice_res);
         Bundle voiceIn = getIntent().getExtras();
         String text = voiceIn.getString("speech");
+        dayMess = "";
         text = text.toLowerCase();
-        TextView v = (TextView) findViewById(R.id.voice);
-        TextView t = (TextView) findViewById(R.id.tV);
         String words[] = text.split(" ");
 
         int count = 0;
+
         for (int i =0; i < words.length; i++) {
             if (words[i].equals("vibrate")) {
                 mode = "Vibrate";
@@ -46,23 +48,139 @@ public class voiceRes extends ActionBarActivity {
             if (words[i].equals("silent")) {
                 mode = "Silent";
             }
-            if (words[i].contains(":")) {
-                if (count == 0) {
-                    hour = words[i].substring(0, words[i].indexOf(":"));
-                    min = words[i].substring(words[i].indexOf(":") + 1);
-                    int h = Integer.parseInt(hour);
-                    int m = Integer.parseInt(min);
-                    beginTime = (h * 100) + m;
-                    beginMess = words[i];
-                    count++;
+            if (words[i].equals("1") || words[i].equals("2") || words[i].equals("3") || words[i].equals("4") || words[i].equals("5") || words[i].equals("6") || words[i].equals("7") || words[i].equals("8") || words[i].equals("9") || words[i].equals("10") || words[i].equals("11") || words[i].equals("12")) {
+                if (beginMess.length() <= 1) {
+                    if (i != words.length-1) {
+                        if (words[i+1].equals("a.m.")) {
+                            hour = words[i];
+                            int h = Integer.parseInt(hour);
+                            beginTime = h * 100;
+                            beginMess = h+": "+"00 AM";
+                        }
+                        else {
+                            hour = words[i];
+                            int h = Integer.parseInt(hour);
+                            beginTime = h * 100;
+                            if (h - 12 > 0) {
+                                beginMess = (h - 12) + ": " + "00 PM";
+                            }
+                            else {
+                                beginMess = (h) + ": " + "00 PM";
+                            }
+
+                        }
+                    }
+                    else {
+
+                        hour = words[i];
+                        int h = Integer.parseInt(hour);
+                        beginTime = h * 100;
+                        if (h - 12 > 0) {
+                            beginMess = (h - 12) + ": " + "00 PM";
+                        }
+                        else {
+                            beginMess = (h) + ": " + "00 PM";
+                        }
+                    }
                 }
                 else {
-                    hour = words[i].substring(0, words[i].indexOf(":"));
-                    min = words[i].substring(words[i].indexOf(":") + 1);
-                    int h = Integer.parseInt(hour);
-                    int m = Integer.parseInt(min);
-                    endTime= (h * 100) + m;
-                    endMess = words[i];
+                    if (i != words.length-1) {
+                        if (words[i+1].equals("a.m.")) {
+                            hour = words[i];
+                            int h = Integer.parseInt(hour);
+                            endTime = h * 100;
+                            endMess = h+": "+"00 AM";
+                        }
+                        else {
+                            hour = words[i];
+                            int h = Integer.parseInt(hour);
+                            endTime = h * 100;
+                            if (h - 12 > 0) {
+                                endMess = (h - 12) + ": " + "00 PM";
+                            }
+                            else {
+                                endMess = (h) + ": " + "00 PM";
+                            }
+                        }
+                    }
+                    else {
+
+                        hour = words[i];
+                        int h = Integer.parseInt(hour);
+                        endTime = h * 100;
+                        if (h - 12 > 0) {
+                            endMess = (h - 12) + ": " + "00 PM";
+                        }
+                        else {
+                            endMess = (h) + ": " + "00 PM";
+                        }
+                    }
+                }
+            }
+            if (words[i].contains(":")) {
+                if (beginMess.length() <= 1) {
+                    if (i != words.length - 1) {
+                        if (words[i + 1].equals("a.m.")) {
+                            hour = words[i].substring(0, words[i].indexOf(":"));
+                            min = words[i].substring(words[i].indexOf(":") + 1);
+                            int h = Integer.parseInt(hour);
+                            int m = Integer.parseInt(min);
+                            beginTime = (h * 100) + m;
+                            beginMess = words[i] + "AM";
+                            count++;
+                        } else {
+                            hour = words[i].substring(0, words[i].indexOf(":"));
+                            min = words[i].substring(words[i].indexOf(":") + 1);
+                            int h = Integer.parseInt(hour);
+                            h = h + 12;
+                            int m = Integer.parseInt(min);
+                            beginTime = (h * 100) + m;
+                            beginMess = words[i] + "PM";
+                            count++;
+
+                        }
+                    } else {
+                        hour = words[i].substring(0, words[i].indexOf(":"));
+                        min = words[i].substring(words[i].indexOf(":") + 1);
+                        int h = Integer.parseInt(hour);
+                        h = h + 12;
+                        int m = Integer.parseInt(min);
+                        beginTime = (h * 100) + m;
+                        beginMess = words[i] + "PM";
+                        count++;
+                    }
+                }
+                else {
+                    if (i != words.length - 1) {
+                        if (words[i + 1].equals("a.m.")) {
+                            hour = words[i].substring(0, words[i].indexOf(":"));
+                            min = words[i].substring(words[i].indexOf(":") + 1);
+                            int h = Integer.parseInt(hour);
+                            int m = Integer.parseInt(min);
+                            endTime = (h * 100) + m;
+                            endMess = words[i] + "AM";
+                            count++;
+                        } else {
+                            hour = words[i].substring(0, words[i].indexOf(":"));
+                            min = words[i].substring(words[i].indexOf(":") + 1);
+                            int h = Integer.parseInt(hour);
+                            h = h + 12;
+                            int m = Integer.parseInt(min);
+                            endTime = (h * 100) + m;
+                            endMess = words[i] + "PM";
+                            count++;
+
+                        }
+                    } else {
+                        hour = words[i].substring(0, words[i].indexOf(":"));
+                        min = words[i].substring(words[i].indexOf(":") + 1);
+                        int h = Integer.parseInt(hour);
+                        h = h + 12;
+                        int m = Integer.parseInt(min);
+                        endTime = (h * 100) + m;
+                        endMess = words[i] + "PM";
+                        count++;
+                    }
                 }
 
             }
@@ -78,18 +196,132 @@ public class voiceRes extends ActionBarActivity {
                 days  = days +"W";
             }
             if (words[i].equals("thursday")) {
-                days  = days +"TH";
+                days  = days +"H";
             }
             if (words[i].equals("friday")) {
                 days = days + "F";
             }
             if (words[i].equals("saturday")) {
-                days = days + "SA";
+                days = days + "S";
             }
             if (words[i].equals("sunday")) {
-                days = days + "SU";
+                days = days + "U";
+            }
+            if (words[i].equals("today")) {
+                Calendar c = Calendar.getInstance();
+                int day = c.get(Calendar.DAY_OF_WEEK);
+                if (day == 1) {
+                    days= days+"U";
+                }
+                else if (day == 2) {
+                    days= days+"M";
+                }
+                else if (day == 3) {
+                    days= days+"T";
+                }
+                else if (day == 4) {
+                    days= days+"W";
+                }
+                else if (day == 5) {
+                    days= days+"H";
+                }
+                else if (day == 6) {
+                    days= days+"F";
+                }
+                else if (day == 7) {
+                    days= days+"S";
+                }
+            }
+            if (words[i].equals("tomorrow")) {
+                Calendar c = Calendar.getInstance();
+                int day = c.get(Calendar.DAY_OF_WEEK);
+                if (day == 7) {
+                    day = 1;
+                }
+                else{
+                    day = day + 1;
+                }
+                if (day == 1) {
+                    days= days+"U";
+                }
+                else if (day == 2) {
+                    days= days+"M";
+                }
+                else if (day == 3) {
+                    days= days+"T";
+                }
+                else if (day == 4) {
+                    days= days+"W";
+                }
+                else if (day == 5) {
+                    days= days+"H";
+                }
+                else if (day == 6) {
+                    days= days+"F";
+                }
+                else if (day == 7) {
+                    days= days+"S";
+                }
             }
         }
+        if (days.length() == 0) {
+            days = "MTWHFSU";
+        }
+        String listOfDays = "";
+        for (int i = 0; i < days.length(); i++) {
+            if (i == 0) {
+                if (i+1 != days.length()) {
+                    if (days.charAt(i) == 'U') {
+                        listOfDays = "(SU";
+                    } else if (days.charAt(i) == 'H') {
+                        listOfDays = "(TH";
+                    } else if (days.charAt(i) == 'S') {
+                        listOfDays = "(SA";
+                    } else {
+                        listOfDays = " (" + days.charAt(i);
+                    }
+                }
+                else {
+                    if (days.charAt(i) == 'U') {
+                        listOfDays = "(SU)";
+                    } else if (days.charAt(i) == 'H') {
+                        listOfDays = "(TH)";
+                    } else if (days.charAt(i) == 'S') {
+                        listOfDays = "(SA)";
+                    } else {
+                        listOfDays = "(" + days.charAt(i)+")";
+                    }
+
+                }
+            }
+            else if (i != days.length()-1){
+                if (days.charAt(i) == 'U'){
+                    listOfDays = listOfDays +",SU";
+                } else if (days.charAt(i) == 'H') {
+                    listOfDays = listOfDays +",TH";
+                }
+                else if (days.charAt(i) == 'S') {
+                    listOfDays = listOfDays +",SA";
+                }
+                else {
+                    if (days.charAt(i) == 'U'){
+                        listOfDays = listOfDays +",SU)";
+                    } else if (days.charAt(i) == 'H') {
+                        listOfDays = listOfDays +",TH)";
+                    }
+                    else if (days.charAt(i) == 'S') {
+                        listOfDays = listOfDays +",SA)";
+                    }
+                    else {
+                        listOfDays = listOfDays + "," + days.charAt(i) + ")";
+                    }
+                }
+            }
+            else {
+                listOfDays = listOfDays +","+days.charAt(i)+")";
+            }
+        }
+
         if (endTime < beginTime) {
             int tim = beginTime;
             String emp = beginMess;
@@ -100,9 +332,17 @@ public class voiceRes extends ActionBarActivity {
         }
         if (mode.length() == 0)
             mode = "Vibrate";
-
-        v.setText("Begin Time: " + beginMess +", End Time: "+ endMess+", Mode: "+mode +" Days: "+days+"!");
-        t.setText(text);
+        dayMess = listOfDays;
+        TextView tv = (TextView) findViewById(R.id.tV);
+        TextView b = (TextView) findViewById(R.id.beg);
+        TextView e = (TextView) findViewById(R.id.end);
+        TextView d = (TextView) findViewById(R.id.day);
+        TextView m = (TextView) findViewById(R.id.voice);
+        tv.setText("Your Text: "+text);
+        m.setText("Mode: "+mode);
+        b.setText("Begin Time: "+beginMess);
+        e.setText("End Time: "+endMess);
+        d.setText("Days: "+dayMess);
         Button s = (Button) findViewById(R.id.sub);
         s.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +352,7 @@ public class voiceRes extends ActionBarActivity {
         });
     }
     private void promptSpeechInput() {
-        String speech_prompt = "What do you want";
+        String speech_prompt = "What is the name of the event?";
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -148,26 +388,10 @@ public class voiceRes extends ActionBarActivity {
 
         }
         String r = "";
-        String listOfDays = "";
-        if (days.length() > 1) {
-            for (int i = 0; i < days.length(); i++) {
-                if (i == 0) {
-                    listOfDays = " (" + days.charAt(i);
-                } else if (i != days.length() - 1) {
-                    listOfDays = listOfDays + "," + days.charAt(i);
-                } else {
-                    listOfDays = listOfDays + "," + days.charAt(i) + ")";
-                }
-            }
-            res = res + r;
-        }
-        else if (days.length() == 0) {
-            res = res + " (NO DAYS)";
-        }
-        else if (days.length() == 1) {
-            res = res + " ("+days+")";
-        }
+
+        res = res +" ("+beginMess+" - "+endMess+")";
         res = res + " ("+ mode +") ";
+        res = res + " "+dayMess;
         v.putExtra("endTimeStr", endMess);
         v.putExtra("beginTime",beginTime);
         v.putExtra("endTime", endTime);

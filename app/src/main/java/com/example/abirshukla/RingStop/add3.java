@@ -113,7 +113,17 @@ public class add3 extends ActionBarActivity {
                     listOfDays = " ("+days.charAt(i);
                 }
                 else if (i != days.length()-1){
-                    listOfDays = listOfDays +","+days.charAt(i);
+                    if (days.charAt(i) == 'U'){
+                        listOfDays = listOfDays +", SU";
+                    } else if (days.charAt(i) == 'H') {
+                        listOfDays = listOfDays +", TH";
+                    }
+                    else if (days.charAt(i) == 'S') {
+                        listOfDays = listOfDays +", SA";
+                    }
+                    else {
+                        listOfDays = listOfDays + "," + days.charAt(i);
+                    }
                 }
                 else {
                     listOfDays = listOfDays +","+days.charAt(i)+")";

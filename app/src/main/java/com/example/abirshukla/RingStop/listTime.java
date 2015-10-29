@@ -67,7 +67,7 @@ public class listTime {
     public static int status (int time, int day) {
         String dayName = "";
         if (day == 1) {
-            dayName="SU";
+            dayName="U";
         }
         else if (day == 2) {
             dayName="M";
@@ -79,13 +79,13 @@ public class listTime {
             dayName="W";
         }
         else if (day == 5) {
-            dayName="TH";
+            dayName="H";
         }
         else if (day == 6) {
             dayName="F";
         }
         else if (day == 7) {
-            dayName="SA";
+            dayName="S";
         }
         int index = -1;
         for (int i = 0; i < timeSlots.size(); i++) {

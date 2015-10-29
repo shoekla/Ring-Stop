@@ -88,16 +88,16 @@ public class add extends ActionBarActivity {
             dayList= dayList+"W";
         }
         if (thur.isChecked()) {
-            dayList= dayList+"TH";
+            dayList= dayList+"H";
         }
         if (fri.isChecked()) {
             dayList= dayList+"F";
         }
         if (sat.isChecked()) {
-            dayList= dayList+"SA";
+            dayList= dayList+"S";
         }
         if (sun.isChecked()) {
-            dayList= dayList+"SU";
+            dayList= dayList+"U";
         }
         m.putExtra("days",dayList);
 

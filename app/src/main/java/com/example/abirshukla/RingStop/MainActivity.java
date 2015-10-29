@@ -63,7 +63,6 @@ public class MainActivity extends ActionBarActivity {
             else {
                 Bundle addedData = getIntent().getExtras();
                 if (addedData == null) {
-                    alertDialogBuilder.show();
                 } else {
                     String className = addedData.getString("name");
                     int beginTime = addedData.getInt("beginTime");
@@ -97,7 +96,7 @@ public class MainActivity extends ActionBarActivity {
         }, 0, 60000);
     }
     private void promptSpeechInput() {
-        String speech_prompt = "What do you want";
+        String speech_prompt = "Enter Information about Event";
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
