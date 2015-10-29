@@ -33,6 +33,11 @@ import android.widget.Toast;
 public class MainActivity extends ActionBarActivity {
     private final int REQ_CODE_SPEECH_INPUT = 100;
     String locationStr = "";
+    Location _currentLocation;
+    LocationManager _locationManager;
+    TextView _locationText;
+    TextView _addressText;
+    String _locationProvider;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //super.onCreate(savedInstanceState);
@@ -97,7 +102,10 @@ public class MainActivity extends ActionBarActivity {
                 checkStat();
             }
         }, 0, 60000);
+
+
     }
+
     private void promptSpeechInput() {
         String speech_prompt = "Enter Information about Event";
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -159,7 +167,10 @@ public class MainActivity extends ActionBarActivity {
         }
     }
     */
-
+    public void moveToLoc (View view) {
+        Intent l = new Intent(this, loc.class);
+        startActivity(l);
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -211,13 +222,6 @@ public class MainActivity extends ActionBarActivity {
     }
     public void movetoLoc (View view) {
         Intent l = new Intent(this, loc.class);
-        LocationManager manager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                mGoogleApiClient);
-        if (mLastLocation != null) {
-            mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
-            mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
-        }
         l.putExtra("loc",locationStr);
         startActivity(l);
     }

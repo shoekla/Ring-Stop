@@ -4,22 +4,38 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.abirshukla.RingStop.R;
 
 public class loc extends ActionBarActivity {
-
+    Button btnShowLoc;
+    GPSTracker gps;
+    TextView t;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loc);
-        TextView t = (TextView) findViewById(R.id.textView1);
-        Bundle l = getIntent().getExtras();
-        if (l != null) {
-            String loc = l.getString("loc");
-                    t.setText("Location: " + loc);
-        }
+        t = (TextView) findViewById(R.id.textView1);
+
+        btnShowLoc = (Button) findViewById(R.id.locBut);
+        btnShowLoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gps = new GPSTracker(loc.this);
+                if (gps.canGetLocation()) {
+                    double latitiude = gps.getLatitude();
+                    double longitude = gps.getLongitude();
+                    t.setText("Location: (Lat: "+latitiude+", Long: "+longitude+").");
+                }
+                else {
+                    gps.showSettingsAlert();
+                }
+            }
+        });
+
     }
 
     @Override
