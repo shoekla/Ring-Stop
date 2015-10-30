@@ -39,18 +39,6 @@ public class GPSTracker extends Service implements LocationListener{
 
             } else {
                 this.canGetLocation = true;
-                if (isNetworkEnabled) {
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANSE_CHANGE_FOR_UPDATES, this);
-
-
-                    if (locationManager != null) {
-                        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        if (location != null) {
-                            latitude = location.getLatitude();
-                            longitude = location.getLongitude();
-                        }
-                    }
-                }
                 if (isGPSEnabled) {
                     if (location == null) {
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANSE_CHANGE_FOR_UPDATES, this);
@@ -63,6 +51,18 @@ public class GPSTracker extends Service implements LocationListener{
 
                         }
 
+                    }
+                }
+                if (isNetworkEnabled || (latitude == 0.0 && longitude == 0)) {
+                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANSE_CHANGE_FOR_UPDATES, this);
+
+
+                    if (locationManager != null) {
+                        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                        if (location != null) {
+                            latitude = location.getLatitude();
+                            longitude = location.getLongitude();
+                        }
                     }
                 }
             }

@@ -18,6 +18,7 @@
     <string name="title_activity_voice_res">voiceRes</string>
     <string name="title_activity_loc_test">locTest</string>
     <string name="title_activity_loc">loc</string>
+    <string name="title_activity_locas">locas</string>
 
 
 </resources>

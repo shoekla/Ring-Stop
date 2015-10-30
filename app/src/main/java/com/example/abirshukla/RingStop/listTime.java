@@ -1,6 +1,8 @@
 package com.example.abirshukla.RingStop;
 
 
+import android.location.Location;
+
 import java.util.ArrayList;
 /**
  * Created by abirshukla on 10/24/15.
@@ -9,6 +11,7 @@ public class listTime {
     public listTime () {
 
     }
+    public static ArrayList<locationForUsers> locs = new ArrayList<locationForUsers>();
     public static ArrayList<String> names = new ArrayList<String>();
     public static int first = 0;
     public static ArrayList<timeSlot> timeSlots = new ArrayList<timeSlot>();
@@ -60,7 +63,6 @@ public class listTime {
         timeSlot t = new timeSlot(name, mode, endTimeS, beginTime, endTime, days);
         timeSlots.add(t);
     }
-
     public static ArrayList<String> getArrNames() {
         return names;
     }
@@ -117,6 +119,14 @@ public class listTime {
     public static boolean vibrate (int i) {
         String mode = timeSlots.get(i).getMode();
         return mode.equals("Vibrate");
+    }
+    public static ArrayList<locationForUsers> getLocs () {
+        return locs;
+    }
+    public static void addLoc (String name, Location loc) {
+        locationForUsers a = new locationForUsers(name, loc);
+        locs.add(a);
+
     }
 
 }
