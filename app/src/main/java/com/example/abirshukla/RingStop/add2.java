@@ -29,7 +29,7 @@ public class add2 extends ActionBarActivity {
         mode = nameU.getString("mode");
         days = nameU.getString("days");
         TextView t = (TextView) findViewById(R.id.textViewNameB);
-        t.setText("Enter Start Time For " + name + ".");
+        t.setText("When does " + name + " start?");
 
     }
 

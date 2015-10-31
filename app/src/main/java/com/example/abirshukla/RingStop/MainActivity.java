@@ -38,6 +38,7 @@ public class MainActivity extends ActionBarActivity {
     TextView _locationText;
     TextView _addressText;
     String _locationProvider;
+    GPSTracker userg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //super.onCreate(savedInstanceState);
@@ -232,6 +233,10 @@ public class MainActivity extends ActionBarActivity {
         int minute = c.get(Calendar.MINUTE);
         int time = hour+minute;
         int status = listTime.status(time, day);
+        //userg = new GPSTracker(MainActivity.this);
+        //Location lU = userg.getLocation();
+        double longit = 85;
+        double lat = 46;
         if (status >= 0) {
             String end = listTime.getEnd(status);
             //q.putExtra("message", "Phone is now on vibrate, and will remain on vibrate until " + end);
@@ -244,6 +249,10 @@ public class MainActivity extends ActionBarActivity {
                 audiomanage.setRingerMode(AudioManager.RINGER_MODE_SILENT);
                 //q.putExtra("message", "Phone is now on silent, and will remain on silent until " + end);
             }
+        }
+        else if (listTime.userLocCheck(lat,longit)) {
+            AudioManager audiomanage = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+            audiomanage.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
         }
         else {
             AudioManager audiomanage = (AudioManager)getSystemService(Context.AUDIO_SERVICE);

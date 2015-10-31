@@ -18,5 +18,15 @@ public class locationForUsers {
     public String getName () {
         return this.name;
     }
+    public boolean inLoc(double userLat, double userLong) {
+        double lat = locChoosed.getLatitude();
+        double longit = locChoosed.getLongitude();
+        if ((lat - 1) < userLat && (lat + 1) > userLat) {
+            if ((longit - 1) < userLong && (longit + 1) > userLong) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

@@ -25,7 +25,7 @@ public class add3 extends ActionBarActivity {
         Bundle nameAndTime = getIntent().getExtras();
         title = nameAndTime.getString("title");
         TextView te = (TextView) findViewById(R.id.textViewEnd);
-        te.setText("Enter End Time For "+title);
+        te.setText("When does "+title+" end?");
         beginTime = nameAndTime.getInt("BeginTime");
         name = nameAndTime.getString("className");
         beginHour = nameAndTime.getInt("hourB");

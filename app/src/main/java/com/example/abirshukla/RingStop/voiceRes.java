@@ -40,7 +40,10 @@ public class voiceRes extends ActionBarActivity {
         String words[] = text.split(" ");
 
         int count = 0;
-
+        if (listTime.locInLocs(text)) {
+            Intent m = new Intent(this, MainActivity.class);
+            startActivity(m);
+        }
         for (int i =0; i < words.length; i++) {
             if (words[i].equals("vibrate")) {
                 mode = "Vibrate";
