@@ -1,6 +1,10 @@
 package com.example.abirshukla.RingStop;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +13,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.AudioManager;
 import android.speech.RecognizerIntent;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -97,7 +102,18 @@ public class MainActivity extends ActionBarActivity {
         mTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                checkStat();
+                boolean b = checkStat();
+                if (b) {
+                    Intent intent = new Intent();
+                    PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this,0,intent,0);
+                    Notification n = new Notification.Builder(MainActivity.this)
+                            .setContentTitle("Ring Stop Notification")
+                            .setContentText("Ring Stop Changed Your Ringer")
+                            .setContentIntent(pendingIntent).getNotification();
+                    n.flags = Notification.FLAG_AUTO_CANCEL;
+                    NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+                    nm.notify(0,n);
+                }
             }
         }, 0, 60000);
 
@@ -225,7 +241,7 @@ public class MainActivity extends ActionBarActivity {
         startActivity(l);
     }
     */
-    public void checkStat () {
+    public boolean checkStat () {
         Calendar c = Calendar.getInstance();
         int hour = c.get(Calendar.HOUR_OF_DAY)*100;
         int day = c.get(Calendar.DAY_OF_WEEK);
@@ -237,17 +253,36 @@ public class MainActivity extends ActionBarActivity {
             //q.putExtra("message", "Phone is now on vibrate, and will remain on vibrate until " + end);
             AudioManager audiomanage = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
             if (listTime.vibrate(status)) {
-                audiomanage.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+                if (AudioManager.MODE_CURRENT != AudioManager.RINGER_MODE_VIBRATE) {
+                    audiomanage.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+                    return true;
+                }
+                else {
+                    return false;
+                }
+                //nm.notify(0,n);
                // q.putExtra("message", "Phone is now on vibrate, and will remain on vibrate until " + end);
             }
             else {
-                audiomanage.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                if (AudioManager.MODE_CURRENT != AudioManager.RINGER_MODE_SILENT) {
+                    audiomanage.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                    return true;
+                }
+                else {
+                    return false;
+                }
                 //q.putExtra("message", "Phone is now on silent, and will remain on silent until " + end);
             }
         }
         else {
             AudioManager audiomanage = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-            audiomanage.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+            if (AudioManager.MODE_CURRENT == AudioManager.RINGER_MODE_VIBRATE || AudioManager.MODE_CURRENT == AudioManager.RINGER_MODE_SILENT) {
+                audiomanage.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                return true;
+            }
+            else {
+                return false;
+            }
             //q.putExtra("message", "Phone is still on ringer");
         }
 
