@@ -32,13 +32,7 @@ import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
     private final int REQ_CODE_SPEECH_INPUT = 100;
-    String locationStr = "";
-    Location _currentLocation;
-    LocationManager _locationManager;
-    TextView _locationText;
-    TextView _addressText;
-    String _locationProvider;
-    GPSTracker userg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //super.onCreate(savedInstanceState);
@@ -58,6 +52,7 @@ public class MainActivity extends ActionBarActivity {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Nothing To Update");
         final AlertDialog.Builder already = new AlertDialog.Builder(this);
+        /*
         Button voiceB = (Button) findViewById(R.id.voiceButton);
         voiceB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +60,7 @@ public class MainActivity extends ActionBarActivity {
                 promptSpeechInput();
             }
         });
+        */
         already.setMessage("Class Already Exists");
             if (first == 0) {
                 listTime.addFirst();
@@ -88,6 +84,7 @@ public class MainActivity extends ActionBarActivity {
                     }
                 }
             }
+
         /*
         listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView parent, View view, int position, long id) {
@@ -218,14 +215,16 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void moveToAdd (View view) {
-        Intent m = new Intent(this, add.class);
+        Intent m = new Intent(this, addmenu.class);
         startActivity(m);
     }
+    /*
     public void movetoLoc (View view) {
         Intent l = new Intent(this, loc.class);
         l.putExtra("loc",locationStr);
         startActivity(l);
     }
+    */
     public void checkStat () {
         Calendar c = Calendar.getInstance();
         int hour = c.get(Calendar.HOUR_OF_DAY)*100;
@@ -233,10 +232,6 @@ public class MainActivity extends ActionBarActivity {
         int minute = c.get(Calendar.MINUTE);
         int time = hour+minute;
         int status = listTime.status(time, day);
-        //userg = new GPSTracker(MainActivity.this);
-        //Location lU = userg.getLocation();
-        double longit = 85;
-        double lat = 46;
         if (status >= 0) {
             String end = listTime.getEnd(status);
             //q.putExtra("message", "Phone is now on vibrate, and will remain on vibrate until " + end);
@@ -249,10 +244,6 @@ public class MainActivity extends ActionBarActivity {
                 audiomanage.setRingerMode(AudioManager.RINGER_MODE_SILENT);
                 //q.putExtra("message", "Phone is now on silent, and will remain on silent until " + end);
             }
-        }
-        else if (listTime.userLocCheck(lat,longit)) {
-            AudioManager audiomanage = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-            audiomanage.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
         }
         else {
             AudioManager audiomanage = (AudioManager)getSystemService(Context.AUDIO_SERVICE);

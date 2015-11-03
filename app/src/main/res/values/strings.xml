@@ -19,6 +19,7 @@
     <string name="title_activity_loc_test">locTest</string>
     <string name="title_activity_loc">loc</string>
     <string name="title_activity_locas">locas</string>
+    <string name="title_activity_addmenu">addmenu</string>
 
 
 </resources>

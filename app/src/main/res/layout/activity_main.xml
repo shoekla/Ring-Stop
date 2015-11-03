@@ -8,7 +8,7 @@
 
 
     -->
-    <Button
+  <!--  <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add To List"
@@ -17,6 +17,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:onClick="moveToAdd"/>
+        -->
     <!--
       <TimePicker
           android:layout_width="wrap_content"
@@ -33,52 +34,64 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:id="@+id/listView"
-                  android:layout_below="@+id/button"
                   android:layout_alignParentTop="true"
                   android:layout_centerHorizontal="true"
-                  android:layout_marginTop="100dp" />
+                   />
 
-    <Button
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add To List by Voice"
-        android:id="@+id/voiceButton"
-        android:layout_marginLeft="16dp"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/button"
-        android:layout_toEndOf="@+id/button" />
+        android:id="@+id/imageButton"
+        android:layout_marginTop="400dp"
+        android:background="@android:color/transparent"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/addbutt"
+        android:onClick="moveToAdd"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Location"
-        android:id="@+id/loc"
-        android:layout_below="@+id/voiceButton"
-        android:layout_alignRight="@+id/voiceButton"
-        android:layout_alignEnd="@+id/voiceButton"
-        android:onClick="moveToLoc"/>
     <!--
-               <Button
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Update"
-                   android:id="@+id/updateB"
-                   android:layout_marginLeft="20dp"
-                   android:layout_alignBottom="@+id/button"
-                   android:layout_toRightOf="@+id/button"
-                   android:layout_toEndOf="@+id/button"
-               android:onClick="update"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add To List by Voice"
+            android:id="@+id/voiceButton"
+            android:layout_marginLeft="16dp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/button"
+            android:layout_toEndOf="@+id/button" />
 
-             <Button
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Check"
-                   android:id="@+id/checkButton"
-                   android:layout_alignParentTop="true"
-                   android:layout_marginLeft="100dp"
-                   android:layout_alignLeft="@+id/updateB"
-                   android:layout_alignStart="@+id/updateB"
-                   android:onClick="checkStat"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location"
+            android:id="@+id/loc"
+            android:layout_below="@+id/voiceButton"
+            android:layout_alignRight="@+id/voiceButton"
+            android:layout_alignEnd="@+id/voiceButton"
+            android:onClick="moveToLoc"/>
 
-           -->
+                   <Button
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Update"
+                       android:id="@+id/updateB"
+                       android:layout_marginLeft="20dp"
+                       android:layout_alignBottom="@+id/button"
+                       android:layout_toRightOf="@+id/button"
+                       android:layout_toEndOf="@+id/button"
+                   android:onClick="update"/>
+
+                 <Button
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Check"
+                       android:id="@+id/checkButton"
+                       android:layout_alignParentTop="true"
+                       android:layout_marginLeft="100dp"
+                       android:layout_alignLeft="@+id/updateB"
+                       android:layout_alignStart="@+id/updateB"
+                       android:onClick="checkStat"/>
+
+               -->
 </RelativeLayout>

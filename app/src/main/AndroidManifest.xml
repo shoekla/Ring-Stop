@@ -47,6 +47,10 @@
             android:name=".locas"
             android:label="@string/title_activity_locas" >
         </activity>
+        <activity
+            android:name=".addmenu"
+            android:label="@string/title_activity_addmenu" >
+        </activity>
     </application>
 
 </manifest>
