@@ -112,14 +112,13 @@ public class MainActivity extends ActionBarActivity {
                             .setContentIntent(pendingIntent).getNotification();
                     n.flags = Notification.FLAG_AUTO_CANCEL;
                     NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-                    nm.notify(0,n);
+                    nm.notify(1,n);
                 }
             }
         }, 0, 60000);
 
 
     }
-
     private void promptSpeechInput() {
         String speech_prompt = "Enter Information about Event";
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
