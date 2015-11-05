@@ -37,11 +37,12 @@ import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
     private final int REQ_CODE_SPEECH_INPUT = 100;
-
+    int currentPhoneMode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //super.onCreate(savedInstanceState);
         int first = listTime.getFirst();
+        currentPhoneMode = AudioManager.MODE_CURRENT;
         final ArrayList<String> list = new ArrayList<String>();
         ArrayList<String> fetchedList = listTime.getArrNames();
         for (int i = 0; i < fetchedList.size();i++) {
@@ -253,6 +254,7 @@ public class MainActivity extends ActionBarActivity {
             AudioManager audiomanage = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
             if (listTime.vibrate(status)) {
                 if (AudioManager.MODE_CURRENT != AudioManager.RINGER_MODE_VIBRATE) {
+                    currentPhoneMode = AudioManager.MODE_CURRENT;
                     audiomanage.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
                     return true;
                 }
@@ -264,6 +266,7 @@ public class MainActivity extends ActionBarActivity {
             }
             else {
                 if (AudioManager.MODE_CURRENT != AudioManager.RINGER_MODE_SILENT) {
+                    currentPhoneMode = AudioManager.MODE_CURRENT;
                     audiomanage.setRingerMode(AudioManager.RINGER_MODE_SILENT);
                     return true;
                 }
@@ -276,7 +279,7 @@ public class MainActivity extends ActionBarActivity {
         else {
             AudioManager audiomanage = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
             if (AudioManager.MODE_CURRENT == AudioManager.RINGER_MODE_VIBRATE || AudioManager.MODE_CURRENT == AudioManager.RINGER_MODE_SILENT) {
-                audiomanage.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                audiomanage.setRingerMode(currentPhoneMode);
                 return true;
             }
             else {
