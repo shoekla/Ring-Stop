@@ -279,7 +279,7 @@ public class MainActivity extends ActionBarActivity {
         else {
             AudioManager audiomanage = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
             if (AudioManager.MODE_CURRENT == AudioManager.RINGER_MODE_VIBRATE || AudioManager.MODE_CURRENT == AudioManager.RINGER_MODE_SILENT) {
-                audiomanage.setRingerMode(currentPhoneMode);
+                audiomanage.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
                 return true;
             }
             else {
