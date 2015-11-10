@@ -81,6 +81,9 @@ public class MainActivity extends ActionBarActivity {
                     String mode = addedData.getString("mode");
                     String endTimeS = addedData.getString("endTimeStr");
                     String days = addedData.getString("days");
+                    if (!days.contains("TH")) {
+                        days = days.replace("H","TH");
+                    }
                     if (!list.contains(className)) {
                         listTime.addToList(className, mode, endTimeS, beginTime, endTime, days);
                         list.add(className);
