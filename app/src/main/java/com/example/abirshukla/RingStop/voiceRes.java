@@ -345,6 +345,9 @@ public class voiceRes extends ActionBarActivity {
         m.setText("Mode: "+mode);
         b.setText("Begin Time: "+beginMess);
         e.setText("End Time: "+endMess);
+        dayMess = dayMess.replace("(","");
+        dayMess = dayMess.replace(")","");
+        dayMess = "("+dayMess+")";
         d.setText("Days: "+dayMess);
         Button s = (Button) findViewById(R.id.sub);
         s.setOnClickListener(new View.OnClickListener() {
