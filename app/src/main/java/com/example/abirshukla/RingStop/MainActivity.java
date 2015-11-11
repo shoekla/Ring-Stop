@@ -164,7 +164,7 @@ public class MainActivity extends ActionBarActivity {
         startActivity(v);
     }
 
-    /*
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
@@ -183,7 +183,7 @@ public class MainActivity extends ActionBarActivity {
 
         }
     }
-    */
+    
     public void moveToLoc (View view) {
         Intent l = new Intent(this, loc.class);
         startActivity(l);
