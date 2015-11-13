@@ -8,6 +8,7 @@ import android.app.TaskStackBuilder;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -20,8 +21,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -38,9 +43,19 @@ import android.widget.Toast;
 public class MainActivity extends ActionBarActivity {
     private final int REQ_CODE_SPEECH_INPUT = 100;
     int currentPhoneMode;
+    SharedPreferences sharedPref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //super.onCreate(savedInstanceState);
+        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        if (sharedPref != null) {
+            String[] names = sharedPref.getString("names","").split(",");
+            for (int i=0;i<names.length;i++) {
+
+                listTime.addToList(names[i],"silent","Something",1130,1230,"M,F");
+            }
+        }
+
         int first = listTime.getFirst();
         currentPhoneMode = AudioManager.MODE_CURRENT;
         final ArrayList<String> list = new ArrayList<String>();
@@ -123,6 +138,7 @@ public class MainActivity extends ActionBarActivity {
 
 
     }
+
     private void promptSpeechInput() {
         String speech_prompt = "Enter Information about Event";
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -183,7 +199,7 @@ public class MainActivity extends ActionBarActivity {
 
         }
     }
-    
+
     public void moveToLoc (View view) {
         Intent l = new Intent(this, loc.class);
         startActivity(l);
@@ -218,6 +234,24 @@ public class MainActivity extends ActionBarActivity {
         savedInstanceState.putIntegerArrayList("endTimes", listTime.getEndTimes());
         super.onSaveInstanceState(savedInstanceState);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        String names = listTime.getArrNames().toString();
+        String modes = listTime.getModes().toString();
+        String endMess = listTime.getEntTimeSes().toString();
+        String endTimes = listTime.getEndTimes().toString();
+        String beginTime = listTime.getBeginTimes().toString();
+        editor.putString("modes", modes);
+        editor.putString("endMess",endMess);
+        editor.putString("endTimes",endTimes);
+        editor.putString("beginTimes",beginTime);
+        editor.putString("names",names);
+        editor.commit();
+        super.onDestroy();
     }
 
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
