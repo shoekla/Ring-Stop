@@ -18,6 +18,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -26,6 +27,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
@@ -44,31 +46,64 @@ public class MainActivity extends ActionBarActivity {
     private final int REQ_CODE_SPEECH_INPUT = 100;
     int currentPhoneMode;
     SharedPreferences sharedPref;
+    ArrayAdapter<String> cAdapter;
+    ArrayList<String> list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //super.onCreate(savedInstanceState);
         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         if (sharedPref != null) {
-            String[] names = sharedPref.getString("names","").split(",");
-            for (int i=0;i<names.length;i++) {
+            String nameList = sharedPref.getString("names", "");
+            String dayList = sharedPref.getString("days","");
+            String begin = sharedPref.getString("beginTimes","");
+            String endT = sharedPref.getString("endTimes","");
+            String modes = sharedPref.getString("modes","");
+            if (nameList.length() > 0) {
+                modes = modes.substring(1,modes.length()-1);
+                nameList = nameList.substring(1, nameList.length() - 1);
+                dayList = dayList.substring(1,dayList.length()-1);
+                begin = begin.substring(1,begin.length()-1);
+                endT = endT.substring(1,endT.length()-1);
+                String[] days = listTime.deleteDups(dayList.split(","));
+                String[] names = listTime.deleteDups(nameList.split(","));
+                String[] bList = listTime.deleteDups(begin.split(","));
+                int[] beginList = new int[bList.length];
+                String[] eList = listTime.deleteDups(endT.split(","));
+                int[] endList = new int[eList.length];
+                String[] modeList = listTime.deleteDups(modes.split(","));
+                for (int k = 0; k < eList.length; k++) {
+                    bList[k] = bList[k].trim();
+                    eList[k] = eList[k].trim();
+                    beginList[k] = Integer.parseInt(bList[k]);
+                    endList[k] = Integer.parseInt(eList[k]);
+                }
 
-                listTime.addToList(names[i],"silent","Something",1130,1230,"M,F");
+                for (int i = 0; i < names.length; i++) {
+                    try {
+                        listTime.addToList(names[i]+"("+beginList[i]+". "+endList[i]+")", modeList[i], "Something", beginList[i], endList[i], days[i]);
+
+                    } catch (Exception e) {
+                        continue;
+                    }
+                     }
             }
-        }
 
+        }
         int first = listTime.getFirst();
         currentPhoneMode = AudioManager.MODE_CURRENT;
-        final ArrayList<String> list = new ArrayList<String>();
+        list = new ArrayList<String>();
         ArrayList<String> fetchedList = listTime.getArrNames();
         for (int i = 0; i < fetchedList.size();i++) {
             list.add(fetchedList.get(i));
         }
-        final ArrayAdapter<String> cAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
+        list = listTime.deleteDups(list);
+        cAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
         ListView listview;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         listview = (ListView) findViewById(R.id.listView);
         listview.setAdapter(cAdapter);
+        registerForContextMenu(listview);
         registerForContextMenu(listview);
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Nothing To Update");
@@ -133,10 +168,36 @@ public class MainActivity extends ActionBarActivity {
                     NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
                     nm.notify(1,n);
                 }
+                else {
+                    AudioManager audiomanage = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+                    audiomanage.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                }
             }
-        }, 0, 60000);
+        }, 0, 30000);
 
 
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_context_menu,menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.deleteId:
+                listTime.deleteNameFromList(info.position);
+                list.removeAll(Collections.singleton(list.get(info.position)));
+                cAdapter.notifyDataSetChanged();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+        //return super.onContextItemSelected(item);
     }
 
     private void promptSpeechInput() {
@@ -181,25 +242,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo) {
-        final ArrayList<String> list = new ArrayList<String>();
-        ArrayList<String> fetchedList = listTime.getArrNames();
-        for (int i = 0; i < fetchedList.size();i++) {
-            list.add(fetchedList.get(i));
-        }
-        if (v.getId()==R.id.listView) {
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
-            menu.setHeaderTitle(list.get(info.position));
-            String[] menuItems = {"Edit","Delete"};
-            for (int i = 0; i<menuItems.length; i++) {
-                menu.add(Menu.NONE, i, i, menuItems[i]);
-            }
-
-        }
-    }
-
     public void moveToLoc (View view) {
         Intent l = new Intent(this, loc.class);
         startActivity(l);
@@ -227,8 +269,8 @@ public class MainActivity extends ActionBarActivity {
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putStringArrayList("names", listTime.getArrNames());
-        savedInstanceState.putStringArrayList("days",listTime.getDays());
-        savedInstanceState.putStringArrayList("modes",listTime.getModes());
+        savedInstanceState.putStringArrayList("days", listTime.getDays());
+        savedInstanceState.putStringArrayList("modes", listTime.getModes());
         savedInstanceState.putStringArrayList("endTimeMess", listTime.getEntTimeSes());
         savedInstanceState.putIntegerArrayList("beginTimes", listTime.getBeginTimes());
         savedInstanceState.putIntegerArrayList("endTimes", listTime.getEndTimes());
@@ -245,11 +287,13 @@ public class MainActivity extends ActionBarActivity {
         String endMess = listTime.getEntTimeSes().toString();
         String endTimes = listTime.getEndTimes().toString();
         String beginTime = listTime.getBeginTimes().toString();
+        String days = listTime.getDays().toString();
         editor.putString("modes", modes);
         editor.putString("endMess",endMess);
         editor.putString("endTimes",endTimes);
         editor.putString("beginTimes",beginTime);
         editor.putString("names",names);
+        editor.putString("days",days);
         editor.commit();
         super.onDestroy();
     }
@@ -285,43 +329,24 @@ public class MainActivity extends ActionBarActivity {
         int minute = c.get(Calendar.MINUTE);
         int time = hour+minute;
         int status = listTime.status(time, day);
+        AudioManager audiomanage = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         if (status >= 0) {
             String end = listTime.getEnd(status);
             //q.putExtra("message", "Phone is now on vibrate, and will remain on vibrate until " + end);
-            AudioManager audiomanage = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
             if (listTime.vibrate(status)) {
-                if (AudioManager.MODE_CURRENT != AudioManager.RINGER_MODE_VIBRATE) {
-                    currentPhoneMode = AudioManager.MODE_CURRENT;
                     audiomanage.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
                     return true;
                 }
                 else {
-                    return false;
+                audiomanage.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                return true;
                 }
                 //nm.notify(0,n);
                // q.putExtra("message", "Phone is now on vibrate, and will remain on vibrate until " + end);
             }
-            else {
-                if (AudioManager.MODE_CURRENT != AudioManager.RINGER_MODE_SILENT) {
-                    currentPhoneMode = AudioManager.MODE_CURRENT;
-                    audiomanage.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-                    return true;
-                }
-                else {
-                    return false;
-                }
-                //q.putExtra("message", "Phone is now on silent, and will remain on silent until " + end);
-            }
-        }
         else {
-            AudioManager audiomanage = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-            if (AudioManager.MODE_CURRENT == AudioManager.RINGER_MODE_VIBRATE || AudioManager.MODE_CURRENT == AudioManager.RINGER_MODE_SILENT) {
-                audiomanage.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-                return true;
-            }
-            else {
+            audiomanage.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
                 return false;
-            }
             //q.putExtra("message", "Phone is still on ringer");
         }
 

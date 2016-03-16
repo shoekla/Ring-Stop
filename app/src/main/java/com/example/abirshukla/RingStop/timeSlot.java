@@ -6,6 +6,7 @@ import java.util.ArrayList;
  * Created by abirshukla on 10/25/15.
  */
 public class timeSlot {
+    public static int len = 0;
     String name, mode, endTimeS;
     int beginTime, endTime;
     String days;
@@ -16,7 +17,9 @@ public class timeSlot {
         this.mode = mode;
         this.endTimeS = endTimeS;
         this.days = days;
+        len++;
     }
+    public static int getLen() { return len; };
     public String getName() {
         return this.name;
     }

@@ -2,13 +2,6 @@
 <items version="2" >
 
     <item
-        jar="/Users/abirshukla/AndroidStudioProjects/JustJava/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars/libs/internal_impl-22.2.1.jar"
-        jumboMode="false"
-        revision="23.0.0 rc3"
-        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
-        <dex dex="/Users/abirshukla/AndroidStudioProjects/JustJava/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.1-43586e33c1907f46b7ddd9511e788160d13d604f.jar" />
-    </item>
-    <item
         jar="/Users/abirshukla/AndroidStudioProjects/JustJava/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.0 rc3"
@@ -21,6 +14,34 @@
         revision="23.0.0 rc3"
         sha1="f8efd0096475e0daf054267b61544e10dc776503">
         <dex dex="/Users/abirshukla/AndroidStudioProjects/JustJava/app/build/intermediates/pre-dexed/debug/classes-874efc7b6af885c927b99ae967abc3d56d281d35.jar" />
+    </item>
+    <item
+        jar="/Users/abirshukla/Documents/Ring-Stop/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.0 rc3"
+        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
+        <dex dex="/Users/abirshukla/Documents/Ring-Stop/app/build/intermediates/pre-dexed/debug/classes-65abdb7029a75fb228fd4c7d1d7fc72bf433cf60.jar" />
+    </item>
+    <item
+        jar="/Users/abirshukla/AndroidStudioProjects/JustJava/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars/libs/internal_impl-22.2.1.jar"
+        jumboMode="false"
+        revision="23.0.0 rc3"
+        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
+        <dex dex="/Users/abirshukla/AndroidStudioProjects/JustJava/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.1-43586e33c1907f46b7ddd9511e788160d13d604f.jar" />
+    </item>
+    <item
+        jar="/Users/abirshukla/Documents/Ring-Stop/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.0 rc3"
+        sha1="f8efd0096475e0daf054267b61544e10dc776503">
+        <dex dex="/Users/abirshukla/Documents/Ring-Stop/app/build/intermediates/pre-dexed/debug/classes-d03e73edbf7e650750986cc90d2af9fff6eb9f04.jar" />
+    </item>
+    <item
+        jar="/Users/abirshukla/Documents/Ring-Stop/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars/libs/internal_impl-22.2.1.jar"
+        jumboMode="false"
+        revision="23.0.0 rc3"
+        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
+        <dex dex="/Users/abirshukla/Documents/Ring-Stop/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.1-c33db37d38352f7996af114880b0469345b60491.jar" />
     </item>
     <item
         jar="/Users/abirshukla/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.1/support-annotations-22.2.1.jar"

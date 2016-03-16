@@ -4,6 +4,10 @@ package com.example.abirshukla.RingStop;
 import android.location.Location;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created by abirshukla on 10/24/15.
  */
@@ -14,6 +18,7 @@ public class listTime {
     public static ArrayList<locationForUsers> locs = new ArrayList<locationForUsers>();
     public static ArrayList<locationForUsers> locsForUsers = new ArrayList<locationForUsers>();
     public static ArrayList<String> names = new ArrayList<String>();
+    public static int startCount = 0;
     public static int first = 0;
     public static ArrayList<timeSlot> timeSlots = new ArrayList<timeSlot>();
     public static void addFirst () {
@@ -21,6 +26,68 @@ public class listTime {
     }
     public static int getFirst () {
         return first;
+    }
+    public static int getStartCount () {
+        return startCount;
+    }
+    public static void deleteNameFromList(int index) {
+        String item = names.get(index);
+
+        ArrayList<String> temp = new ArrayList<String>();
+        for (int i = 0; i < names.size();i++) {
+            temp.add(names.get(i));
+        }
+        names.clear();
+        for (int i =0; i < temp.size(); i++) {
+            if (!(temp.get(i).equals(item))) {
+                names.add(temp.get(i));
+            }
+        }
+        ArrayList<timeSlot> arrT = new ArrayList<>();
+        for (int i = 0; i < timeSlot.getLen();i++) {
+            arrT.add(timeSlots.get(i));
+        }
+        timeSlots.clear();
+        for (int i = 0; i < timeSlot.getLen();i++) {
+            if (i != index) {
+                timeSlots.add(arrT.get(i));
+            }
+        }
+        names = listTime.deleteDups(names);
+
+    }
+    public static String[] deleteDups(String[] arr) {
+        ArrayList<String> result = new ArrayList<>();
+        for (int i = 0; i < arr.length; i++) {
+            if(!isInArr(result,arr[i])) {
+                result.add(arr[i]);
+            }
+        }
+        String[] resArr = new String[result.size()];
+        for (int i = 0; i < result.size();i++) {
+            resArr[i] = result.get(i);
+        }
+        return resArr;
+    }
+    public static ArrayList<String> deleteDups(ArrayList<String> arr) {
+        ArrayList<String> result = new ArrayList<>();
+        for (int i = 0; i < arr.size(); i++) {
+            if(!isInArr(result,arr.get(i))) {
+                result.add(arr.get(i));
+            }
+        }
+        return result;
+    }
+    public static boolean isInArr (ArrayList<String> arr, String ele) {
+        for (int i =0; i < arr.size(); i++) {
+            if (arr.get(i).equals(ele)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static void setStartCount () {
+        startCount = 1;
     }
     public static ArrayList<Integer> getBeginTimes () {
         ArrayList<Integer> res = new ArrayList<Integer>();
@@ -65,6 +132,7 @@ public class listTime {
         timeSlots.add(t);
     }
     public static ArrayList<String> getArrNames() {
+        names = deleteDups(names);
         return names;
     }
     public static int status (int time, int day) {

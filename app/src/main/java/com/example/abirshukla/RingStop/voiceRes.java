@@ -301,27 +301,27 @@ public class voiceRes extends ActionBarActivity {
                 if (days.charAt(i) == 'U'){
                     listOfDays = listOfDays +",SU";
                 } else if (days.charAt(i) == 'H') {
-                    listOfDays = listOfDays +",TH";
+                    listOfDays = listOfDays +"-TH";
                 }
                 else if (days.charAt(i) == 'S') {
-                    listOfDays = listOfDays +",SA";
+                    listOfDays = listOfDays +"-SA";
                 }
                 else {
                     if (days.charAt(i) == 'U'){
-                        listOfDays = listOfDays +",SU)";
+                        listOfDays = listOfDays +"-SU)";
                     } else if (days.charAt(i) == 'H') {
-                        listOfDays = listOfDays +",TH)";
+                        listOfDays = listOfDays +"-TH)";
                     }
                     else if (days.charAt(i) == 'S') {
-                        listOfDays = listOfDays +",SA)";
+                        listOfDays = listOfDays +"-SA)";
                     }
                     else {
-                        listOfDays = listOfDays + "," + days.charAt(i) + ")";
+                        listOfDays = listOfDays + "-" + days.charAt(i) + ")";
                     }
                 }
             }
             else {
-                listOfDays = listOfDays +","+days.charAt(i)+")";
+                listOfDays = listOfDays +"-"+days.charAt(i)+")";
             }
         }
 
