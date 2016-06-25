@@ -1,12 +1,7 @@
 package com.example.abirshukla.RingStop;
 
 
-import android.location.Location;
-
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Created by abirshukla on 10/24/15.
@@ -15,8 +10,6 @@ public class listTime {
     public listTime () {
 
     }
-    public static ArrayList<locationForUsers> locs = new ArrayList<locationForUsers>();
-    public static ArrayList<locationForUsers> locsForUsers = new ArrayList<locationForUsers>();
     public static ArrayList<String> names = new ArrayList<String>();
     public static int startCount = 0;
     public static int first = 0;
@@ -189,40 +182,6 @@ public class listTime {
         String mode = timeSlots.get(i).getMode();
         return mode.equals("Vibrate");
     }
-    public static ArrayList<locationForUsers> getLocs () {
-        return locs;
-    }
-    public static void addLoc (String name, Location loc) {
-        locationForUsers a = new locationForUsers(name, loc);
-        locs.add(a);
 
-    }
-    public static boolean locInLocs (String text) {
-        text = text.toLowerCase();
-        text = text.replace(" ","");
-        for (int i = 0; i < locs.size(); i++) {
-            if (text.contains(locs.get(i).getName().toLowerCase())) {
-                addLocUser(locs.get(i).getName());
-                return true;
-            }
-        }
-        return false;
-    }
-    public static void addLocUser (String name) {
-        for (int i = 0; i < locs.size(); i++) {
-            if (locs.get(i).getName().equals(name)) {
-                locsForUsers.add(locs.get(i));
-                names.add("(Location Based) "+name);
-            }
-        }
-    }
-    public static boolean userLocCheck (double lat, double longit) {
-        for (int i = 0; i < locsForUsers.size(); i++) {
-            if (locsForUsers.get(i).inLoc(lat,longit)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
 }

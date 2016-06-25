@@ -241,11 +241,6 @@ public class MainActivity extends ActionBarActivity {
         startActivity(v);
     }
 
-
-    public void moveToLoc (View view) {
-        Intent l = new Intent(this, loc.class);
-        startActivity(l);
-    }
     @Override
     protected void onResume() {
         super.onResume();

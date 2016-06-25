@@ -2,17 +2,15 @@ package com.example.abirshukla.RingStop;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.abirshukla.RingStop.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,10 +38,6 @@ public class voiceRes extends ActionBarActivity {
         String words[] = text.split(" ");
 
         int count = 0;
-        if (listTime.locInLocs(text)) {
-            Intent m = new Intent(this, MainActivity.class);
-            startActivity(m);
-        }
         for (int i =0; i < words.length; i++) {
             if (words[i].equals("vibrate")) {
                 mode = "Vibrate";
