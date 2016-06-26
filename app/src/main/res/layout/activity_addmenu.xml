@@ -25,15 +25,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add by Location (New)"
-        android:id="@+id/addLoc"
-        android:layout_below="@+id/addBV"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:onClick="moveToLoc"/>
+
 
 
 </RelativeLayout>

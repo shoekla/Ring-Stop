@@ -4,42 +4,29 @@ import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.media.AudioManager;
+import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.support.v4.app.NotificationCompat;
-import android.util.Log;
+import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import android.widget.ArrayAdapter;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -52,42 +39,47 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         //super.onCreate(savedInstanceState);
         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        if (sharedPref != null) {
-            String nameList = sharedPref.getString("names", "");
-            String dayList = sharedPref.getString("days","");
-            String begin = sharedPref.getString("beginTimes","");
-            String endT = sharedPref.getString("endTimes","");
-            String modes = sharedPref.getString("modes","");
-            if (nameList.length() > 0) {
-                modes = modes.substring(1,modes.length()-1);
-                nameList = nameList.substring(1, nameList.length() - 1);
-                dayList = dayList.substring(1,dayList.length()-1);
-                begin = begin.substring(1,begin.length()-1);
-                endT = endT.substring(1,endT.length()-1);
-                String[] days = listTime.deleteDups(dayList.split(","));
-                String[] names = listTime.deleteDups(nameList.split(","));
-                String[] bList = listTime.deleteDups(begin.split(","));
-                int[] beginList = new int[bList.length];
-                String[] eList = listTime.deleteDups(endT.split(","));
-                int[] endList = new int[eList.length];
-                String[] modeList = listTime.deleteDups(modes.split(","));
-                for (int k = 0; k < eList.length; k++) {
-                    bList[k] = bList[k].trim();
-                    eList[k] = eList[k].trim();
-                    beginList[k] = Integer.parseInt(bList[k]);
-                    endList[k] = Integer.parseInt(eList[k]);
+        try {
+            if (sharedPref != null) {
+                String nameList = sharedPref.getString("names", "");
+                String dayList = sharedPref.getString("days", "");
+                String begin = sharedPref.getString("beginTimes", "");
+                String endT = sharedPref.getString("endTimes", "");
+                String modes = sharedPref.getString("modes", "");
+                if (nameList.length() > 0) {
+                    modes = modes.substring(1, modes.length() - 1);
+                    nameList = nameList.substring(1, nameList.length() - 1);
+                    dayList = dayList.substring(1, dayList.length() - 1);
+                    begin = begin.substring(1, begin.length() - 1);
+                    endT = endT.substring(1, endT.length() - 1);
+                    String[] days = listTime.deleteDups(dayList.split(","));
+                    String[] names = listTime.deleteDups(nameList.split(","));
+                    String[] bList = listTime.deleteDups(begin.split(","));
+                    int[] beginList = new int[bList.length];
+                    String[] eList = listTime.deleteDups(endT.split(","));
+                    int[] endList = new int[eList.length];
+                    String[] modeList = listTime.deleteDups(modes.split(","));
+                    for (int k = 0; k < eList.length; k++) {
+                        bList[k] = bList[k].trim();
+                        eList[k] = eList[k].trim();
+                        beginList[k] = Integer.parseInt(bList[k]);
+                        endList[k] = Integer.parseInt(eList[k]);
+                    }
+
+                    for (int i = 0; i < names.length; i++) {
+                        try {
+                            listTime.addToList(names[i] + "(" + beginList[i] + ". " + endList[i] + ")", modeList[i], "Something", beginList[i], endList[i], days[i]);
+
+                        } catch (Exception e) {
+                            continue;
+                        }
+                    }
                 }
 
-                for (int i = 0; i < names.length; i++) {
-                    try {
-                        listTime.addToList(names[i]+"("+beginList[i]+". "+endList[i]+")", modeList[i], "Something", beginList[i], endList[i], days[i]);
-
-                    } catch (Exception e) {
-                        continue;
-                    }
-                     }
             }
-
+        }
+        catch (Exception e) {
+            Toast.makeText(this, "Failed To Load Data", Toast.LENGTH_SHORT).show();
         }
         int first = listTime.getFirst();
         currentPhoneMode = AudioManager.MODE_CURRENT;
